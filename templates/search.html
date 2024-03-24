@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Songs</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <h1>Search for a Song</h1>
+        <form action="/search" method="post">
+            <input type="text" name="search_query" placeholder="Enter song name" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,175 @@
+.navbar {
+    /*overflow: hidden;*/
+    background-color: #333; /* Dark background color */
+    font-family: Arial, sans-serif; /* Change as needed */
+    position: fixed;
+    top: 0;
+}
+
+.navbar a {
+    float: left; /* Align links to the left side */
+    display: block; /* Make links take up the whole block space */
+    color: white; /* Text color */
+    text-align: center; /* Center text within links */
+    padding: 14px 20px; /* Spacing inside links */
+    text-decoration: none; /* Remove underline from links */
+}
+
+/* Change link colors on hover */
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #282828;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.container {
+    background-color: #404040;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 20px;
+}
+
+/*.playlist {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #666;
+}*/
+
+.playlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.big-playlists {
+    margin-top: 1000px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.play-button {
+    background-color: #1DB954;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.play-button:hover {
+    background-color: #18a148;
+}
+
+.playlist-image {
+    display: block;
+    width: 200px; /* Adjust based on your layout */
+    height: 200px; /* Adjust based on your layout */
+    object-fit: cover; /* Keep aspect ratio */
+    border-radius: 8px; /* Optional: for rounded corners */
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button {
+    background-color: #1DB954;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #18a148;
+}
+
+.album-art img {
+    max-width: 200px; /* Added for album art sizing */
+    border-radius: 20px; /* Added for rounded corners on the album art */
+    margin-top: 20px;
+}
+
+.song-info {
+    background-color: #1DB954;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    margin-top: 20px;
+    color: #282828; /* For better contrast and readability */
+}
+
+.playback-controls button {
+    background-color: #1DB954;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: white;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.playback-controls button:hover {
+    background-color: #18a148;
+}
+
+.queue-buttons button {
+    background-color: #1DB954;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: white;
+    margin: 5px;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    border-bottom: 1px solid grey;
+}
+
+a {
+    color: #1DB954;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1, h2 {
+    margin: 10px 0;
+}
+
+p {
+    margin: 5px 0;
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Now Playing</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <div class="album-art">
+            <img id="album_art" src="" alt="Album Art" />
+        </div>
+        <h1>Now Playing</h1>
+        <div class="song-info">
+            <p>Track: <span id="track_name">{{ track_name }}</span></p>
+            <p>Artist: <span id="artist_name">{{ artist_name }}</span></p>
+        </div>
+        {% if display_name %}
+            <h2>Hi {{ display_name }}!  <small><a href="/sign_out">[sign out]</a></small></h2>
+        {% else %}
+            <h2><a href="/">Sign in to Spotify</a></h2>
+        {% endif %}
+        <div class="playback-controls">
+            <button onclick="previousTrack()">Previous</button>
+            <button id="playPauseBtn" onclick="togglePlayPause()">Play</button>
+            <button onclick="nextTrack()">Next</button>
+        </div>
+        <!-- <div class="queue-buttons">
+            <a href="/search">
+                <button> Search </button>
+            </a>
+            <a href="/playlists">
+                <button>Playlists</button>
+            </a> -->
+        </div>
+        
+        <script>
+            let isPlaying = false; // To toggle play/pause
+        
+            function togglePlayPause() {
+                const playPauseBtn = document.getElementById('playPauseBtn');
+                const currentAction = playPauseBtn.innerText.toLowerCase();
+
+                if (currentAction === 'play') {
+                    fetch('/play').then(res => {
+                        if (res.ok) {
+                            playPauseBtn.innerText = 'Pause'; // Update button text to reflect the new state
+                        }
+                    });
+                } else if (currentAction === 'pause') {
+                    fetch('/pause').then(res => {
+                        if (res.ok) {
+                            playPauseBtn.innerText = 'Play'; // Update button text to reflect the new state
+                        }
+                    });
+                }
+            }
+
+        
+            function nextTrack() {
+                fetch('/next').then(res => {
+                    if (res.ok) {
+                        console.log('Skipped to next track');
+                    }
+                });
+            }
+        
+            function previousTrack() {
+                fetch('/previous').then(res => {
+                    if (res.ok) {
+                        console.log('Skipped to previous track');
+                    }
+                });
+            }
+        </script>
+    </div>
+
+    <script>
+        function fetchNowPlaying() {
+            fetch('/now_playing_data')
+                .then(response => response.json())
+                .then(data => {
+                    if(data.error) {
+                        console.log('Error fetching data:', data.error);
+                        return;
+                    }
+                    document.getElementById('track_name').innerText = data.track_name;
+                    document.getElementById('artist_name').innerText = data.artist_name;
+                    document.getElementById('album_art').src = data.album_art_url;
+                })
+                .catch(error => console.log('Error:', error));
+        }
+        
+        // Fetch now playing info every 5 seconds
+        setInterval(fetchNowPlaying, 5000);
+    </script>
+</body>
+</html>

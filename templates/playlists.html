@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Playlists</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <title>My Playlists</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <!-- <h1>My Playlists</h1> -->
+    <div id="playlistsContainer" class="big-playlists">
+        {% for playlist in playlists %}
+        <div id="playlistsContainer">
+            {% if playlist.images %}
+            <img src="{{ playlist.images[0].url}}" alt="{{ playlist.name }}" class="playlist-image"> 
+            <h2>{{ playlist.name }} <button class="play-button" data-playlist-uri="{{ playlist['uri'] }}" onclick="startPlayback(this)">Play</button></h2>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchPlaylists();
+        });
+
+        function fetchPlaylists() {
+            fetch('/playlists')
+                .then(response => response.json())
+                .then(data => {
+                    const playlistsContainer = document.getElementById('playlistsContainer');
+                    playlistsContainer.innerHTML = '';
+                    data.items.forEach(playlist => {
+                        const div = document.createElement('div');
+                        div.classList.add('playlist');
+                        const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : '/images/logo.png';
+                        div.innerHTML = `
+                            <img src="${imageUrl}" alt="${playlist.name}" class="playlist-image">
+                            <h2>${playlist.name}</h2>
+                            <p>${playlist.tracks.total} tracks</p>
+                            <button onclick="startPlayback('${playlist.uri}')">Play</button>
+                        `;
+                        playlistsContainer.appendChild(div);
+                    });
+                })
+                .catch(error => console.error('failed to fetch', error));
+
+        }
+
+        function startPlayback(buttonElement){
+            var playlistUri = buttonElement.getAttribute('data-playlist-uri');
+            fetch('/play_playlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ playlist_uri: playlistUri}),
+            })
+            .then(response =>{
+                if(response.ok){
+                   window.location.href = '/' 
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data.success){
+                    console.log("Playback started");
+                } else {
+                    console.error("Error");
+                }
+            })
+            .catch(error => console.error("error"))
+        }
+    </script>
+</body>
+</html>
+
